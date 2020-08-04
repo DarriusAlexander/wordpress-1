@@ -111,8 +111,8 @@ RUN set -ex; \
 		dir="$(basename "${dir%/}")"; \
 		mkdir "wp-content/$dir"; \
 	done; \
-	chown -R www-data:www-data wp-content; \
-	chmod -R 777 wp-content
+	sudo chown -R www-data:www-data wp-content; \
+	sudo chmod -R 777 wp-content
 
 VOLUME /var/www/html
 VOLUME /var/www/html/wp-content/plugins/
