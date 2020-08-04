@@ -98,7 +98,7 @@ ENV WORDPRESS_VERSION 5.4.2
 ENV WORDPRESS_SHA1 e5631f812232fbd45d3431783d3db2e0d5670d2d
 
 RUN set -ex; \
-	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
+	curl -o wordpress.tar.gz -fSL "https://storage.googleapis.com/stateless-fullstacknet/wordpress-${WORDPRESS_VERSION}.tar.gz"; \ 
 	echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
@@ -113,10 +113,7 @@ RUN set -ex; \
 	chown -R www-data:www-data wp-content; \
 	chmod -R 777 wp-content
  		
-RUN curl -LO https://github.com/DarriusAlexander/speaklight-content/archive/master.zip  | grep -oP '"tag_name": "\K(.*)(?=")'; \
-	unzip master.zip -d /usr/src/wordpress/wp-content/plugins; \
-	chown -R www-data:www-data wp-content; \
-	chmod -R 777 wp-content
+
 VOLUME /var/www/html
 
 COPY docker-entrypoint.sh /usr/local/bin/
