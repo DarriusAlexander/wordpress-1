@@ -112,7 +112,8 @@ RUN set -ex; \
 		mkdir "wp-content/$dir"; \
 	done; \
 	#sudo chown -R www-data:www-data wp-content; \
-	#sudo chmod -R 777 wp-content
+	done
+	
 VOLUME /var/www/html
 VOLUME /var/www/html/wp-content/plugins/
 VOLUME /var/www/html/wp-content/themes/
