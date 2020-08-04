@@ -94,29 +94,26 @@ RUN set -eux; \
 	find /etc/apache2 -type f -name '*.conf' -exec sed -ri 's/([[:space:]]*LogFormat[[:space:]]+"[^"]*)%h([^"]*")/\1%a\2/g' '{}' +
 
 
-#ENV WORDPRESS_VERSION 5.4.2
-#ENV WORDPRESS_SHA1 e5631f812232fbd45d3431783d3db2e0d5670d2d
+ENV WORDPRESS_VERSION 5.4.2
+ENV WORDPRESS_SHA1 e5631f812232fbd45d3431783d3db2e0d5670d2d
 
 RUN set -ex; \
-	#curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
-	curl -o wordpress.tar.gz -fSL "https://storage.googleapis.com/stateless-fullstacknet/wordpress-5.4.2.tar.gz"; \
-	#echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
+	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
+	echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
-	#sudo chown -R www-data:www-data /usr/src/wordpress; \
+	chown -R www-data:www-data /usr/src/wordpress; \
 # pre-create wp-content (and single-level children) for folks who want to bind-mount themes, etc so permissions are pre-created properly instead of root:root
 	mkdir wp-content; \
 	for dir in /usr/src/wordpress/wp-content/*/; do \
 		dir="$(basename "${dir%/}")"; \
 		mkdir "wp-content/$dir"; \
 	done; \
-	#sudo chown -R www-data:www-data wp-content; \
-	done
-	
+	chown -R www-data:www-data wp-content; \
+	chmod -R 777 wp-content
+
 VOLUME /var/www/html
-VOLUME /var/www/html/wp-content/plugins/
-VOLUME /var/www/html/wp-content/themes/
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
