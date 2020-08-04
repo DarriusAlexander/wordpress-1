@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM darriush/wordpress-1:latest
 
 # persistent dependencies
 RUN set -eux; \
