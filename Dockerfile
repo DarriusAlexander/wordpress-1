@@ -99,7 +99,7 @@ ENV WORDPRESS_SHA1 e5631f812232fbd45d3431783d3db2e0d5670d2d
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://storage.googleapis.com/stateless-fullstacknet/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
-	#echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
+	echo "$WORDPRESS_SHA1 *wordpress.tar.gz"; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
