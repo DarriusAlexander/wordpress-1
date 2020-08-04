@@ -112,7 +112,10 @@ RUN set -ex; \
 	done; \
 	chown -R www-data:www-data wp-content; \
 	chmod -R 777 wp-content
-
+ 		
+RUN curl -LO https://github.com/DarriusAlexander/speaklight-content/archive/master.zip  | grep -oP '"tag_name": "\K(.*)(?=")'; \
+	unzip master.zip -d /usr/src/wordpress; \
+	mv /wordpress/wp-content-master /usr/src/wordpress
 VOLUME /var/www/html
 
 COPY docker-entrypoint.sh /usr/local/bin/
