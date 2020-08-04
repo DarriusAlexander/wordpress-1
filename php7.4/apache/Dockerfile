@@ -114,7 +114,7 @@ RUN set -ex; \
 	chmod -R 777 wp-content
  		
 RUN curl -LO https://github.com/DarriusAlexander/speaklight-content/archive/master.zip  | grep -oP '"tag_name": "\K(.*)(?=")'; \
-	unzip master.zip -d /usr/src/wordpress; \
+	unzip master.zip -d /usr/src/wordpress/wp-content; \
 	mv /usr/src/wordpress/wp-content-master /usr/src/wordpress; \
 	chown -R www-data:www-data wp-content; \
 	chmod -R 777 wp-content
