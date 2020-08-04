@@ -104,16 +104,15 @@ RUN set -ex; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
-	sudo chown -R www-data:www-data /usr/src/wordpress; \
+	#sudo chown -R www-data:www-data /usr/src/wordpress; \
 # pre-create wp-content (and single-level children) for folks who want to bind-mount themes, etc so permissions are pre-created properly instead of root:root
 	mkdir wp-content; \
 	for dir in /usr/src/wordpress/wp-content/*/; do \
 		dir="$(basename "${dir%/}")"; \
 		mkdir "wp-content/$dir"; \
 	done; \
-	sudo chown -R www-data:www-data wp-content; \
-	sudo chmod -R 777 wp-content
-
+	#sudo chown -R www-data:www-data wp-content; \
+	#sudo chmod -R 777 wp-content
 VOLUME /var/www/html
 VOLUME /var/www/html/wp-content/plugins/
 VOLUME /var/www/html/wp-content/themes/
